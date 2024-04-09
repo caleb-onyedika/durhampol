@@ -1,0 +1,18 @@
+Install python
+
+create virtual env in your terminal
+    - python -m venv venv   
+
+Activate Virtual environment
+    - venv\scripts\activate (for windows users)
+    - source venv/bin/activate (for Mac Users)
+
+Install the python libraries required
+    - python pip install -r requirements.txt
+
+download and install xampp software 
+create a mysql database
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
