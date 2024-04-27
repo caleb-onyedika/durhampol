@@ -1,0 +1,132 @@
+{% extends "partials/admin-base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Crime Scenes</a></li>
+                <li class="breadcrumb-item" aria-current="page">List</li>
+              </ul>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+          <div class="card table-card">
+            <div class="card-body">
+              <div class="text-end p-4 pb-sm-2">
+                <a href="{% url 'add-new-crime-scene' %}" class="btn btn-primary d-inline-flex align-item-center">
+                  <i class="ti ti-plus f-18"></i> Add New Crime Scene
+                </a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover" id="pc-dt-simple">
+                  <thead>
+                    <tr>
+                      <th>Officer In Charge</th>
+                      <th>Name</th>
+                      <th>Date/Time Occurred</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for crime_scene in crime_scenes %}
+                        <tr>
+                          <td>{{crime_scene.user.first_name}} {{crime_scene.user.last_name}}</td>
+                          <td>{{crime_scene.name_of_incident}}</td>
+                          <td>{{crime_scene.date}}/{{crime_scene.time}}</td>
+
+
+                          <td class="text-center">
+                            <ul class="list-inline me-auto mb-0">
+                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="View">
+                                <a href="{% url "crime-scene-detail" crime_scene.id %}" class="avtar avtar-xs btn-link-secondary btn-pc-default">
+                                  <i class="ti ti-eye f-18"></i>
+                                </a>
+                              </li>
+                              
+                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
+                                <a href="#" class="avtar avtar-xs btn-link-danger btn-pc-default" data-bs-toggle="modal"
+                                data-bs-target="#delete-crime-scene{{crime_scene.id}}">
+                                  <i class="ti ti-trash f-18"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+
+
+
+
+
+
+
+
+                        <!-- Delete modal -->
+                        <div class="modal fade" id="delete-crime-scene{{crime_scene.id}}" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="mb-0">Delete Crime Scene</h5>
+                                <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                                  <i class="ti ti-x f-20"></i>
+                                </a>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  
+                                  <div class="col-sm-12">
+                                    Are you sure you want to delete this crime scene?
+                                    <div class="modal-footer justify-content-between">
+                                      
+                                      <div class="flex-grow-1 text-end">
+                                        <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
+                                        <a href="{% url "delete-crime-scene" crime_scene.id %}" class="btn btn-danger">Delete</a>
+                                      </div>
+                                    </div>                                                                      
+                                  </div>
+                                </div>
+                              </div>  
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                    {% endfor %}
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+
+
+  <!-- [ Main Content ] end -->
+
+
+{% endblock content %}

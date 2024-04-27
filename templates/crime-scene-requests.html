@@ -1,0 +1,160 @@
+{% extends "partials/admin-base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Crime Scenes</a></li>
+                <li class="breadcrumb-item" aria-current="page">List</li>
+              </ul>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+          <div class="card table-card">
+            <div class="card-body">
+              <div class="text-end p-4 pb-sm-2">
+
+              </div>
+                {% if crime_scenes_view_requests %}
+
+              <div class="table-responsive">
+                <table class="table table-hover" id="pc-dt-simple">
+                  <thead>
+                    <tr>
+                      <th>Requester</th>
+                      <th>Name of Crime Scene</th>
+                      <th>Reason</th>
+                      <th>Date/Time</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for csvr in crime_scenes_view_requests %}
+                        <tr>
+                          <td>{{csvr.requester.first_name}} {{csvr.requester.last_name}}</td>
+                          <td>{{csvr.incident.name_of_incident}}</td>
+                          <td>{{csvr.reason_for_visiting}}</td>
+                          <td>{{csvr.date}}/{{csvr.time}}</td>
+
+
+                          <td class="text-center">
+                            <ul class="list-inline me-auto mb-0">
+                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="View">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#approve-crime-scene-request{{csvr.id}}">Approve</button>
+                              </li>
+                              
+                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#decline-crime-scene-request{{csvr.id}}">Decline</button>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+
+
+
+                        <!-- Approve modal -->
+                        <div class="modal fade" id="approve-crime-scene-request{{csvr.id}}" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="mb-0">Approve Crime Scene Request</h5>
+                                  <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                                    <i class="ti ti-x f-20"></i>
+                                  </a>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    
+                                    <div class="col-sm-12">
+                                      Are you sure you want to grant {{csvr.requester.first_name}} {{csvr.requester.last_name}} access to this crime scene?
+                                      <div class="modal-footer justify-content-between">
+                                        
+                                        <div class="flex-grow-1 text-end">
+                                          <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
+                                          <a href="{% url "approve-crime-scene-request" csvr.id %}" class="btn btn-primary">Approve</a>
+                                        </div>
+                                      </div>                                                                      
+                                    </div>
+                                  </div>
+                                </div>  
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                        <!-- Decline modal -->
+                        <div class="modal fade" id="decline-crime-scene-request{{csvr.id}}" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="mb-0">Decline Crime Scene Request</h5>
+                                <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                                  <i class="ti ti-x f-20"></i>
+                                </a>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  
+                                  <div class="col-sm-12">
+                                    Are you sure you want to decline {{csvr.requester.first_name}} {{csvr.requester.last_name}} access to this crime scene?
+                                    <div class="modal-footer justify-content-between">
+                                      
+                                      <div class="flex-grow-1 text-end">
+                                        <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
+                                        <a href="{% url 'decline-crime-scene-request' csvr.id %}" class="btn btn-danger">Decline</a>
+                                      </div>
+                                    </div>                                                                      
+                                  </div>
+                                </div>
+                              </div>  
+                            </div>
+                          </div>
+                        </div>
+
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+              {% else %}
+              <div class="text-center">
+                <h2>You have no pending requests at this time...</h2>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+
+
+  <!-- [ Main Content ] end -->
+
+
+{% endblock content %}

@@ -1,0 +1,173 @@
+{% extends "partials/admin-base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <!-- [ Main Content ] start -->
+    <section class="pc-container">
+      <div class="pc-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+          <div class="page-block">
+            <div class="row align-items-center">
+              <div class="col-md-12">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="javascript: void(0)">Forms</a></li>
+                  <li class="breadcrumb-item" aria-current="page">Add New Crime Scene</li>
+                </ul>
+              </div>
+              <div class="col-md-12">
+                <div class="page-header-title">
+                  <h2 class="mb-0">Add New Crime Scene</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        <!-- [ Main Content ] start -->
+        <div class="row">
+          <!-- [ form-element ] start -->
+          
+          <div class="col-lg-12">
+          
+            <div class="card">
+              <div class="card-header">
+                {% comment %} <h5>Input Label Alignment</h5> {% endcomment %}
+              </div>
+              <div class="card-body">
+                <form id="incident-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  <h5 class="mb-3">A. Summary of Incident:</h5>
+
+                  <div class="form-group row">
+                    <label class="col-lg-4 col-form-label text-lg-end">Name of Incident:</label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" placeholder="Name of Incident" name="name-of-incident">
+                      <small class="form-text text-muted">Please enter name of Incident</small>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label class="col-lg-4 col-form-label text-lg-end">Nature of Incident:</label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" placeholder="Nature of Incident" name="nature-of-incident">
+                      <small class="form-text text-muted">Please enter nature of Incident</small>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label class="col-lg-4 col-form-label text-lg-end">Location of Incident:</label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" placeholder="Enter location of incident" name="location-of-incident">
+                      <small class="form-text text-muted">Please enter location of incident</small>
+                    </div>
+                  </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label text-lg-end">Weather Conditions:</label>
+                        <div class="col-lg-6">
+                        <input type="text" class="form-control" placeholder="Weather conditions" name="weather-conditions">
+                        <small class="form-text text-muted">Please enter weather conditions</small>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label text-lg-end">Time of Incident:</label>
+                        <div class="col-lg-6">
+                        <input type="time" class="form-control" name="time">
+                        <small class="form-text text-muted">Please enter Time</small>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label text-lg-end">Date of Incident:</label>
+                        <div class="col-lg-6">
+                        <input type="date" class="form-control" name="date">
+                        <small class="form-text text-muted">Please enter date</small>
+                        </div>
+                    </div>
+
+
+
+                    <hr class="my-4">
+                    <h5 class="mb-3">B. Images of Incident:</h5>
+                    <div id="image-fields">
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label text-lg-end">Image:</label>
+                            <div class="col-lg-6">
+                                <input type="file" name="images[]" class="form-control">
+                                <small class="form-text text-muted">Please upload an image</small>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label text-lg-end">Comment:</label>
+                            <div class="col-lg-6">
+                                <input type="text" name="comments[]" class="form-control" placeholder="Enter comment">
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="justify-content-around text-end">
+
+                        <button type="button" class="btn btn-primary add-image">Add Image</button>
+
+                        <button type="submit" class="btn btn-primary text-end">Submit</button>
+
+                    </div>
+                                
+                </form>
+
+              </div>
+            </div>
+          </div>
+          <!-- [ form-element ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </section>
+
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageFields = document.getElementById('image-fields');
+            const addImageButton = document.querySelector('.add-image');
+    
+            addImageButton.addEventListener('click', function() {
+                const imageField = `
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label text-lg-end">Image:</label>
+                        <div class="col-lg-6">
+                            <input type="file" name="images[]" class="form-control">
+                            <small class="form-text text-muted">Please upload an image</small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label text-lg-end">Comment:</label>
+                        <div class="col-lg-6">
+                            <input type="text" name="comments[]" class="form-control" placeholder="Enter comment">
+                        </div>
+                    </div>
+                `;
+                imageFields.insertAdjacentHTML('beforeend', imageField);
+            });
+        });
+    </script>
+    
+
+
+
+    {% endblock content %}
