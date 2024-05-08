@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<style>
+    /* Your CSS file */
+    .swal-success-ring::before {
+    content: "\f10c"; /* Unicode for a checkmark icon (you may need to customize this based on your font) */
+    font-family: 'Font Awesome'; /* If you're using an icon font like Font Awesome */
+    font-size: 24px; /* Adjust the size as needed */
+    color: green; /* Adjust the color as needed */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 1.5s infinite linear; /* Add rotation animation if desired */
+    }
+
+    @keyframes rotate {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+    }
+</style>
+
+
+
+
+<script>
+
+    {% if messages %}
+    
+    {% for message in messages %}
+
+
+        {% if message.tags == 'success' %}
+
+                    
+            //Success Message
+            Swal.fire(
+                {
+                    icon: 'success',
+                    title: 'Good job!',
+                    text: '{{message}}',
+                    type: 'success',
+                    confirmButtonClass: 'btn btn-confirm mt-2'
+                }
+            ) 
+
+
+
+        {% else %} 
+            
+            //Error Message
+            Swal.fire({
+                icon: 'error',
+                type: 'error',
+                title: 'Oops...',
+                text: '{{message}}',
+                confirmButtonClass: 'btn btn-confirm mt-2',
+                //footer: '<a href="">Why do I have this issue?</a>'
+            })    
+                
+        {% endif %}
+
+
+    
+    
+    {% endfor %}
+    
+
+    {% endif %}
+
+</script>
