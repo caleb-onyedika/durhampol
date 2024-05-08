@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Durham | {{title}}</title>
+  <!-- [Meta] -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Able Pro is trending dashboard template made using Bootstrap 5 design framework. Able Pro is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies.">
+  <meta name="keywords" content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard">
+  <meta name="author" content="Phoenixcoded">
+
+  <!-- [Favicon] icon -->
+  <link rel="icon" href="{% static "assets/images/favicon.svg" %}" type="image/x-icon">
+  <!-- [Page specific CSS] start -->
+  <link href="{% static 'assets/css/plugins/animate.min.css' %}" rel="stylesheet" type="text/css' %}" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css' %}" rel="stylesheet" />
+  <!-- [Page specific CSS] end -->
+  <!-- [Font] Family -->
+  <link rel="stylesheet" href="{% static 'assets/fonts/inter/inter.css' %}" id="main-font-link" />
+  <!-- [Tabler Icons] https://tablericons.com -->
+  <link rel="stylesheet" href="{% static 'assets/fonts/tabler-icons.min.css' %}" >
+  <!-- [Feather Icons] https://feathericons.com -->
+  <link rel="stylesheet" href="{% static 'assets/fonts/feather.css' %}" >
+  <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+  <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome.css' %}" >
+  <!-- [Material Icons] https://fonts.google.com/icons -->
+  <link rel="stylesheet" href="{% static 'assets/fonts/material.css' %}" >
+  <!-- [Template CSS Files] -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" id="main-style-link" >
+  <link rel="stylesheet" href="{% static 'assets/css/style-preset.css' %}" >
+
+
+  <link rel="stylesheet" href="{% static 'assets/css/landing.css' %}" />
+  <script src="{% static 'assets/js/tech-stack.js' %}"></script>
+</head>
+
+<body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme_contrast="" data-pc-theme="light" class="landing-page">
+  <!-- [ Main Content ] start -->
+  <!-- [ Pre-loader ] start -->
+  <div class="loader-bg">
+    <div class="loader-track">
+      <div class="loader-fill"></div>
+    </div>
+  </div>
+  <!-- [ Pre-loader ] End -->
+
+  <!-- [ Header ] start -->
+  <header id="home" style="background-image: url(../static/assets/images/landing/img-headerbg.jpg)">
+    <!-- [ Nav ] start -->
+    <!-- [ Nav ] start -->
+    <nav class="navbar navbar-expand-md navbar-light default">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="{% static 'assets/images/logo.png' %}" class="" alt="logo" height="10%" width="50%">
+        </a>
+        <button
+          class="navbar-toggler rounded"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+            <li class="nav-item px-1">
+              <a class="nav-link" href="{% url "contact" %}">Contact</a>
+              </li>
+
+            {% if user.is_authenticated %}
+                <li class="nav-item px-1">
+                    <a class="nav-link" href="{% url "dashboard" %}">Dashboard</a>
+                </li>
+
+                <li class="nav-item px-1">
+                <a class="nav-link" href="{% url "logout" %}">Logout</a>
+                </li>
+            
+            {% else %}
+                <li class="nav-item px-1">
+                <a class="nav-link" href="{% url "login" %}">Login</a>
+                </li>
+                <li class="nav-item px-1">
+                <a class="nav-link" href="{% url "user-signup" %}">Signup</a>
+                </li>
+                <li class="nav-item px-1">
+                  <a class="nav-link" href="{% url "admin-signup" %}">Admin Signup</a>
+                </li>
+            {% endif %}
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- [ Nav ] start -->
+
+    {% include "partials/sweet-alerts.html" %}
+
+
+{% block content %}{% endblock content %}
+
+
+
+  <!-- [ footer apps ] start -->
+  <footer class="footer">
+    
+  </footer>
+  <!-- [ footer apps ] End -->
+
+  <!-- [ Main Content ] end -->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+  <!-- Required Js -->
+  <script src="{% static 'assets/js/plugins/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/simplebar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/fonts/custom-font.js' %}"></script>
+  <script src="{% static 'assets/js/pcoded.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/feather.min.js' %}"></script>
+
+  
+  
+  
+  
+  <script>layout_change('light');</script>
+  
+  
+  
+  
+  <script>layout_theme_contrast_change('false');</script>
+  
+  
+  
+  <script>change_box_container('false');</script>
+  
+  
+  <script>layout_caption_change('true');</script>
+  
+  
+  
+  
+  <script>layout_rtl_change('false');</script>
+  
+  
+  <script>preset_change("preset-1");</script>
+  
+  <!-- [Page Specific JS] start -->
+  <script src="{% static "assets/js/plugins/wow.min.js" %}"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.marquee/1.4.0/jquery.marquee.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="{% static "assets/js/plugins/Jarallax.js" %}"></script>
+  <script>
+    // Start [ Menu hide/show on scroll ]
+    let ost = 0;
+    document.addEventListener('scroll', function () {
+      let cOst = document.documentElement.scrollTop;
+      if (cOst == 0) {
+        document.querySelector('.navbar').classList.add('top-nav-collapse');
+      } else if (cOst > ost) {
+        document.querySelector('.navbar').classList.add('top-nav-collapse');
+        document.querySelector('.navbar').classList.remove('default');
+      } else {
+        document.querySelector('.navbar').classList.add('default');
+        document.querySelector('.navbar').classList.remove('top-nav-collapse');
+      }
+      ost = cOst;
+    });
+    // End [ Menu hide/show on scroll ]
+    var wow = new WOW({
+      animateClass: 'animated'
+    });
+    wow.init();
+
+    // slider start
+    $('.screen-slide').owlCarousel({
+      loop: true,
+      margin: 30,
+      center: true,
+      nav: false,
+      dotsContainer: '.app_dotsContainer',
+      URLhashListener: true,
+      items: 1
+    });
+    $('.workspace-slider').owlCarousel({
+      loop: true,
+      margin: 30,
+      center: true,
+      nav: false,
+      dotsContainer: '.workspace-card-block',
+      URLhashListener: true,
+      items: 1.5
+    });
+    // slider end
+    // marquee start
+    $('.marquee').marquee({
+      duration: 500000,
+      pauseOnHover: true,
+      startVisible: true,
+      duplicated: true
+    });
+    $('.marquee-1').marquee({
+      duration: 500000,
+      pauseOnHover: true,
+      startVisible: true,
+      duplicated: true,
+      direction: 'right'
+    });
+    // marquee end
+  </script>
+  <!-- [Page Specific JS] end -->
+  
+  </div>
+</body>
+
+</html>
