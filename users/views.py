@@ -86,7 +86,7 @@ def admin_signup(request):
             message = EmailMessage(subject, html_message,
                                    email_from, recipient_list)
             message.content_subtype = 'html'
-            message.send()
+            # message.send()
 
             request.session['is_sweet_alert'] = True
 
@@ -165,7 +165,7 @@ def user_signup(request):
             message = EmailMessage(subject, html_message,
                                    email_from, recipient_list)
             message.content_subtype = 'html'
-            message.send()
+            # message.send()
 
             request.session['is_sweet_alert'] = True
             messages.success(request, 'Your registration was successful, please confirm your email before logging in.')
@@ -275,7 +275,7 @@ def reset_password(request):
         message = EmailMessage(subject, html_message,
                                email_from, recipient_list)
         message.content_subtype = 'html'
-        message.send()
+        # message.send()
 
         context = {
             'title': 'Email Sent',
