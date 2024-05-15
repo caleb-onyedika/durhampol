@@ -1,0 +1,131 @@
+{% extends "partials/admin-base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="https://ableproadmin.com/dashboard/index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Users</a></li>
+                <li class="breadcrumb-item" aria-current="page">List</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">List</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+          <div class="card table-card">
+            <div class="card-body">
+              <div class="text-end p-4 pb-sm-2">
+                {% comment %} <a href="#" class="btn btn-primary d-inline-flex align-item-center" data-bs-toggle="modal" data-bs-target="#customer-edit_add-modal">
+                  <i class="ti ti-plus f-18"></i> Add User
+                </a> {% endcomment %}
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover" id="pc-dt-simple">
+                  <thead>
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for user in users %}
+                        <tr>
+                          <td>{{user.first_name}}</td>
+                          <td>{{user.last_name}}</td>
+                          <td>{{user.email}}</td>
+
+                          <td class="text-center">
+                            <ul class="list-inline me-auto mb-0">
+                            
+                              
+                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
+                                <a href="#" class="avtar avtar-xs btn-link-danger btn-pc-default" data-bs-toggle="modal"
+                                data-bs-target="#delete-user-modal-{{user.id}}">
+                                  <i class="ti ti-trash f-18"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+
+
+
+                          
+                          <!-- Delete modal -->
+                          <div class="modal fade" id="delete-user-modal-{{user.id}}" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="mb-0">Delete User</h5>
+                                  <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                                    <i class="ti ti-x f-20"></i>
+                                  </a>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-sm-3 text-center">
+
+                                    </div>
+                                    <div class="col-sm-9">
+                                      Are you sure you want to delete {{user.first_name}}'s account?
+                                      <div class="modal-footer justify-content-between">
+                                        
+                                        <div class="flex-grow-1 text-end">
+                                          <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
+                                          <a href="{% url "delete-user" user.id %}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                      </div>                                                                      
+                                    </div>
+                                  </div>
+                                </div>  
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                    {% endfor %}
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+
+
+  <!-- [ Main Content ] end -->
+
+
+{% endblock content %}
