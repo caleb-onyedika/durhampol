@@ -2,6 +2,7 @@
 
 {% load static %}
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
 
   <!-- [ Main Content ] start -->
@@ -22,6 +23,7 @@
               <div class="page-header-title">
                 <h2 class="mb-0">Crime Scene Details</h2>
               </div>
+              
             </div>
           </div>
         </div>
@@ -41,8 +43,10 @@
                   
                   <div class="card">
                     <div class="card-header">
+                      
                       <h5>Summary of Incident</h5>
                     </div>
+                    
                     <div class="card-body">
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item px-0 pt-0">
@@ -111,12 +115,65 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="card">
+                  <div class="card" id="incident_log">
                     <div class="card-header">
-                      <h5>Incident log</h5>
+                      <h4>Incident log</h4>
                     </div>
+                  
+                      <p class="mx-5 mt-5 mb-3">AS THE OFFICER IN CHARGE OF THE INCIDENT LOG IT IS YOUR RESPONSIBILITY TO ACCURATELY RECORD ALL VISITS TO/OCCURRENCES AT THE SCENE OF THIS INCIDENT. IT SHOULD BE BORNE IN MIND THAT SCENE PRESERVATION IS OF THE UTMOST IMPORTANCE. IT MAY BE NECESSARY AT A LATER STAGE TO ACCOUNT FOR/ELIMINATE ALL VISITORS TO THE SCENE. IF THAT IS THE CASE THE POLICE INVESTIGATION WILL ONLY BE AS COMPREHENSIVE AS YOUR LOG ALLOWS IT TO BE.<br><br>
+                      ENSURE THAT ALL VISITORS TO THE SCENE STATE THEIR REASON FOR ENTERING. UNNECESSARY ACCESS MUST BE REFUSED. IN CASES OF DIFFICULTY CONTACT YOUR DUTY SUPERVISOR, OR THE CRIME SCENE MANAGER IN ATTENDANCE.<br><br>
+                      <span class="text-red-900">PROTECTIVE CLOTHING CONSISTING OF A DISPOSABLE PAPER SUIT, GLOVES AND OVERSHOES MUST BE WORN BY ALL PERSONS ENTERING THE CRIME SCENE AT ALL TIMES UNTIL THE SCENE IS RELEASED BY THE SENIOR INVESTIGATING OFFICER.</span><br><br>
+                      THIS IS AN ORIGINAL DOCUMENT AND SHOULD BE PASSED ON TO THE NEXT OFFICER DETAILED TO COMPLETE THE SCENE LOG, A RECORD OF THIS SHOULD BE ENDORSED, AS IT OCCURS, ON THE SCENE LOG.</p>
+
+                    
+
+                      <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item px-0 pt-0">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Name Of Incident</p>
+                                <p class="mb-0">{{crime_scene.name_of_incident}}</p>
+                              </div>
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Nature of Incident</p>
+                                <p class="mb-0">{{crime_scene.nature_of_incident}}</p>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="list-group-item px-0">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Time</p>
+                                <p class="mb-0">{{crime_scene.time}}</p>
+                              </div>
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Date</p>
+                                <p class="mb-0">{{crime_scene.date}}</p>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="list-group-item px-0">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Location</p>
+                                <p class="mb-0">{{crime_scene.location_of_incident}}</p>
+                              </div>
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Weather Conditions</p>
+                                <p class="mb-0">{{crime_scene.weather_conditions}}</p>
+                              </div>
+                            </div>
+                          </li>
+                          
+                        </ul>
+                      </div>
+                    
+
+                    
                     <div class="card-body">
                       <div class="table-responsive">
+                        <p>(Changes to be noted on log)
                         <table class="table table-hover" id="pc-dt-simple">
                           <thead>
                             <tr>
@@ -141,8 +198,22 @@
                           </tbody>
                         </table>
                       </div>
+                      
                     </div>
                   </div>
+                  {% if user.is_staff %}
+                    <div class="row">
+                      <div class="d-grid mt-4 justify-content-around col-4 text-right">
+                        {% if crime_scene.case_closed == False %}
+                        <a href="{% url "close-crime-scene" crime_scene.id %}" class="btn btn-danger text-end">Close Crime Scene</a>
+                        {% else %}
+                        <a type="button" id="download" class="btn btn-primary text-end">Export/Download Incident Log</a>
+
+                        {% endif %}                          
+                      </div>
+                      
+                    </div>
+                    {% endif %}
                   {% else %}
 
                   <div class="card">
@@ -183,6 +254,25 @@
     </div>
   </div>
   <!-- [ Main Content ] end -->
+
+
+  <script type="text/javascript">
+    window.onload = function(){
+      document.getElementById("download").addEventListener('click', ()=>{
+          const invoice = this.document.getElementById("incident_log")
+          console.log(window)
+          var opt = {
+              margin: 5,
+              filename: 'invoice.pdf',
+              image:  {type: 'jpeg', quality: 0.98},
+              html2canvas: {scale: 2, scrollY: 0},
+              jsPDF: {unit: 'mm',  format: 'a3', orientation: 'portrait', cssMediaType: 'print'}
+          }
+          html2pdf().from(invoice).set(opt).save()
+      })
+  }
+    
+</script>
  
 
   {% endblock content %}
