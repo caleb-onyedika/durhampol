@@ -1,0 +1,337 @@
+{% extends "partials/admin-base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Users</a></li>
+                <li class="breadcrumb-item" aria-current="page">List</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">List</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+          <div class="card table-card">
+            <div class="card-body">
+              <div class="text-end p-4 pb-sm-2">
+                {% comment %} <a href="#" class="btn btn-primary d-inline-flex align-item-center" data-bs-toggle="modal" data-bs-target="#customer-edit_add-modal">
+                  <i class="ti ti-plus f-18"></i> Add User
+                </a> {% endcomment %}
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover" id="pc-dt-simple">
+                  <thead>
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Verification Status</th>
+                      <th>Approval Status</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for user in users %}
+                        <tr>
+                          <td>{{user.first_name}}</td>
+                          <td>{{user.last_name}}</td>
+                          <td>{{user.email}}</td>
+
+                          <td>
+                            {% if user.is_email_verified == True %}
+                              <span class="badge bg-light-success rounded-pill f-12">Verified</span>
+                            {% else %}
+                              <span class="badge bg-light-danger rounded-pill f-12">Unverified</span>
+                            {% endif %}                            
+                          </td>
+
+                          <td>
+                            {% if user.is_approved == "Approved" %}
+                              <span class="badge bg-light-success rounded-pill f-12">{{user.is_approved}}</span>
+                            {% elif user.is_approved == "Pending" %}
+                              <span class="badge bg-light-info rounded-pill f-12">{{user.is_approved}}</span>
+                            {% else %}
+                              <span class="badge bg-light-danger rounded-pill f-12">{{user.is_approved}}</span>
+                            {% endif %}                            
+                          </td>
+
+                          <td class="text-center">
+                            <ul class="list-inline me-auto mb-0">
+                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="View">
+                                <a href="#" class="avtar avtar-xs btn-link-secondary btn-pc-default" data-bs-toggle="modal"
+                                  data-bs-target="#view-user-modal-{{user.id}}">
+                                  <i class="ti ti-eye f-18"></i>
+                                </a>
+                              </li>
+                              
+                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
+                                <a href="#" class="avtar avtar-xs btn-link-danger btn-pc-default" data-bs-toggle="modal"
+                                data-bs-target="#delete-user-modal-{{user.id}}">
+                                  <i class="ti ti-trash f-18"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+
+
+
+
+
+                          <!-- view user modal -->
+                          <div class="modal fade" id="view-user-modal-{{user.id}}" data-bs-keyboard="false" tabindex="-1" 
+                          aria-hidden="true">
+                          <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                              <div class="modal-header border-0 pb-0">
+                                <h5 class="mb-0">user Details</h5>
+                                <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                                  <i class="ti ti-x f-20"></i>
+                                </a>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="card">
+                                      <div class="card-body position-relative">
+                                        <div class="position-absolute end-0 top-0 p-3">
+                                            {% if user.is_approved == "Approved" %}
+                                                <span class="badge bg-success">{{user.is_approved}}</span>
+                                            {% elif user.is_approved == "Pending" %}
+                                                <span class="badge bg-primary">{{user.is_approved}}</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">{{user.is_approved}}</span>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <div class="text-center mt-3">
+                                          <div class="chat-avtar d-inline-flex mx-auto">
+                                            {% if user.image %}
+                                            <img class="rounded-circle img-fluid wid-60" src="{{user.image.url}}"
+                                              alt="User image">
+                                            {% endif %}
+                                          </div>
+                                          <h5 class="mb-0">{{user.first_name}} {{user.last_name}}</h5>
+                                          {% comment %} <p class="text-muted text-sm">{{user.last_name}}</p> {% endcomment %}
+                                          <hr class="my-3 border border-secondary-subtle">
+                                          <div class="row g-3">
+                                            <div class="col-4">
+                                              <h5 class="mb-0">{{user.dob}}</h5>
+                                              <small class="text-muted">Date of birth</small>
+                                            </div>
+                                            <div class="col-4 border border-top-0 border-bottom-0">
+                                              <h5 class="mb-0">{{user.last_login}}</h5>
+                                              <small class="text-muted">Last Login</small>
+                                            </div>
+                                            <div class="col-4">
+                                              <h5 class="mb-0">{{user.date_joined}}</h5>
+                                              <small class="text-muted">Date Joined</small>
+                                            </div>
+                                          </div>
+                                          <hr class="my-3 border border-secondary-subtle">
+                                          <div class="d-inline-flex align-items-center justify-content-start m-l-20 w-100 mb-3">
+                                            <i class="ti ti-mail"></i>
+                                            <p class="mb-0 m-l-20">{{user.email}}</p>
+                                          </div>
+                                          <div class="d-inline-flex align-items-center justify-content-start m-l-20 w-100 mb-3">
+                                            <i class="ti ti-map-pin"></i>
+                                            <p class="mb-0 m-l-20">{{user.address}}</p>
+                                          </div>
+                                          <div class="d-inline-flex align-items-center justify-content-start m-l-20 w-100 mb-3">
+                                            <i class="ti ti-map-pin"></i>
+                                            <p class="mb-0 m-l-20">{{user.zipcode}}</p>
+                                          </div>
+                                          
+                                        </div>
+                                      </div>
+
+                                      <div class="flex-grow-1 text-end pb-3 px-3">
+                                        <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
+                                        {% if user.is_approved == "Pending" %}
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#approve-modal-{{user.id}}">Approve</button>
+
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#decline-modal-{{user.id}}">Decline</button>
+                                        {% elif user.is_approved == "Approved" %}
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#decline-modal-{{user.id}}">Deactivate</button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#approve-modal-{{user.id}}">Activate</button>
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                                  </div>                                 
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                        
+                          <!-- Approve modal -->
+                          <div class="modal fade" id="approve-modal-{{user.id}}" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="mb-0">Approve User</h5>
+                                  <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                                    <i class="ti ti-x f-20"></i>
+                                  </a>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-sm-3 text-center">
+                                      <div class="chat-avtar d-inline-flex mx-auto">
+                                        {% if user.image %}
+                                        <img class="rounded-square img-fluid wid-70" src="{{user.image.url}}"
+                                          alt="User image">
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      Are you sure you want to approve {{user.first_name}}'s account?
+                                      <div class="modal-footer justify-content-between">
+                                        
+                                        <div class="flex-grow-1 text-end">
+                                          <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
+                                          <a href="{% url "approve-user" user.id %}" class="btn btn-primary">Approve</a>
+                                        </div>
+                                      </div>                                                                      
+                                    </div>
+                                  </div>
+                                </div>  
+                              </div>
+                            </div>
+                          </div>
+
+
+
+                          <!-- Decline modal -->
+                          <div class="modal fade" id="decline-modal-{{user.id}}" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="mb-0">Decline/Deactivate User</h5>
+                                  <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                                    <i class="ti ti-x f-20"></i>
+                                  </a>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-sm-3 text-center">
+                                      <div class="chat-avtar d-inline-flex mx-auto">
+                                        {% if user.image %}
+
+                                        <img class="rounded-square img-fluid wid-70" src="{{user.image.url}}"
+                                          alt="User image">
+                                        {% endif %}
+
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      Are you sure you want to deactivate {{user.first_name}}'s account?
+                                      <div class="modal-footer justify-content-between">
+                                        
+                                        <div class="flex-grow-1 text-end">
+                                          <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
+                                          <a href="{% url "decline-user" user.id %}" class="btn btn-danger">Deactivate</a>
+                                        </div>
+                                      </div>                                                                      
+                                    </div>
+                                  </div>
+                                </div>  
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                          
+                          <!-- Delete modal -->
+                          <div class="modal fade" id="delete-user-modal-{{user.id}}" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="mb-0">Delete User</h5>
+                                  <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                                    <i class="ti ti-x f-20"></i>
+                                  </a>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-sm-3 text-center">
+                                      <div class="chat-avtar d-inline-flex mx-auto">
+                                        {% if user.image %}
+
+                                        <img class="rounded-square img-fluid wid-70" src="{{user.image.url}}"
+                                          alt="User image">
+                                        {% endif %}
+
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      Are you sure you want to delete {{user.first_name}}'s account?
+                                      <div class="modal-footer justify-content-between">
+                                        
+                                        <div class="flex-grow-1 text-end">
+                                          <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
+                                          <a href="{% url "delete-user" user.id %}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                      </div>                                                                      
+                                    </div>
+                                  </div>
+                                </div>  
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                    {% endfor %}
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+
+
+  <!-- [ Main Content ] end -->
+
+
+{% endblock content %}

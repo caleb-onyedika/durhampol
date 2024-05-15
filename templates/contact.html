@@ -1,0 +1,66 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-md-5">
+        <h2>Talk to our Expert</h2>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contact-form bg-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12"><h2 class="sr-only">contact form</h2></div>
+      <form method="POST">
+        {% csrf_token %}
+      <div class="col-xxl-6 col-md-12 col-sm-12">
+        <div class="row my-4">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">First name</label>
+              <input type="text" name="first-name" class="form-control" placeholder="First name" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Surname</label>
+              <input type="text" name="last-name" class="form-control" placeholder="Last name" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Email id</label>
+              <input type="email" name="email" class="form-control" placeholder="Email id" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="text" name="phone" class="form-control" placeholder="Phone Number" />
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea type="text" name="message" class="form-control" placeholder="Message"></textarea>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="mt-4 d-grid">
+              <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

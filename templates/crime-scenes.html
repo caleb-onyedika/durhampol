@@ -61,13 +61,15 @@
                                   <i class="ti ti-eye f-18"></i>
                                 </a>
                               </li>
-                              
+                              {% if user.is_staff %}
                               <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
                                 <a href="#" class="avtar avtar-xs btn-link-danger btn-pc-default" data-bs-toggle="modal"
                                 data-bs-target="#delete-crime-scene{{crime_scene.id}}">
                                   <i class="ti ti-trash f-18"></i>
+                                  
                                 </a>
                               </li>
+                              {% endif %}
                             </ul>
                           </td>
                         </tr>

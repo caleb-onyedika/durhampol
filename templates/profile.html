@@ -1,0 +1,264 @@
+{% extends "partials/admin-base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Users</a></li>
+                <li class="breadcrumb-item" aria-current="page">Account Profile</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">Account Profile</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body py-0">
+              <ul class="nav nav-tabs profile-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="profile-tab-1" data-bs-toggle="tab" href="#profile-1" role="tab"
+                    aria-selected="true">
+                    <i class="ti ti-user me-2"></i>Profile
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="profile-tab-2" data-bs-toggle="tab" href="#profile-2" role="tab"
+                    aria-selected="true">
+                    <i class="ti ti-file-text me-2"></i>Update Details
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" id="profile-tab-4" data-bs-toggle="tab" href="#profile-4" role="tab"
+                    aria-selected="true">
+                    <i class="ti ti-lock me-2"></i>Change Password
+                  </a>
+                </li>
+
+
+              </ul>
+            </div>
+          </div>
+          <div class="tab-content">
+            <div class="tab-pane show active" id="profile-1" role="tabpanel" aria-labelledby="profile-tab-1">
+              <div class="row">
+                <div class="col-lg-12 col-xxl-12">
+                  <div class="card">
+                    <div class="card-body position-relative">
+                      <div class="position-absolute end-0 top-0 p-3">
+                        <span class="badge bg-primary">Pro</span>
+                      </div>
+                      <div class="text-center mt-3">
+                        <div class="chat-avtar d-inline-flex mx-auto">
+                          {% if user.image %}
+                          <img class="rounded-square img-fluid wid-70" src="{{user.image.url}}"
+                            alt="User image">
+                          {% else %}
+                          <img class="rounded-circle img-fluid wid-70" src="{% static 'assets/images/user/avatar-5.jpg' %}"
+                            alt="User image">
+                          {% endif %}
+
+                        </div>
+                        <h5 class="mb-0">{{user.first_name}} {{user.last_name}}</h5>
+
+                        <hr class="my-3 border border-secondary-subtle">
+                         <div class="row g-3">
+                            <div class="col-3">
+                              <h5 class="mb-0">{{user.dob}}</h5>
+                              <small class="text-muted">Date of birth</small>
+                            </div>
+                            <div class="col-3 border border-top-0 border-bottom-0">
+                              <h5 class="mb-0">{{user.last_login}}</h5>
+                              <small class="text-muted">Last Login</small>
+                            </div>
+                            <div class="col-3 border border-top-0 border-bottom-0 ">
+                              <h5 class="mb-0">{{user.date_joined}}</h5>
+                              <small class="text-muted">Date Joined</small>
+                            </div>
+                           <div class="col-3">
+                              <h5 class="mb-0" id="location"></h5>
+                              <small class="text-muted">Current Location</small>
+                            </div>
+                         </div>
+                        <hr class="my-3 border border-secondary-subtle">
+                        <div class="d-inline-flex align-items-center justify-content-start w-100 mb-3">
+                          <i class="ti ti-mail me-2"></i>
+                          <p class="mb-0">{{user.email}}</p>
+                        </div>
+                        {% if user.address %}
+                          <div class="d-inline-flex align-items-center justify-content-start w-100 mb-3">
+                            <i class="ti ti-map-pin me-2"></i>
+                            <p class="mb-0">{{user.address}}</p>
+                          </div>
+                          <div class="d-inline-flex align-items-center justify-content-start w-100">
+                            <i class="ti ti-link me-2"></i>
+                              <p class="mb-0">{{user.zipcode}}</p>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="tab-pane" id="profile-2" role="tabpanel" aria-labelledby="profile-tab-2">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-12 text-center mb-3">
+
+                        </div>
+                          <div class="col-sm-6 text center">
+                            <form method="post" enctype="multipart/form-data">
+
+                                    {% csrf_token %}
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <label class="form-label" for="first_name">First Name</label>
+                                          <div class="form-group mb-3">
+                                            <input type="text" class="form-control" name="first_name" id="first_name" value="{{user.first_name}}" placeholder="First Name" required>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <label class="form-label" for="last_name">Last Name</label>
+                                          <div class="form-group mb-3">
+                                            <input type="text" class="form-control" name="last_name" id="last_name" value="{{user.last_name}}" placeholder="Last Name" required>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    <div class="d-grid mt-4 text-end">
+                                      <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                    </div>
+                            </form>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="tab-pane" id="profile-4" role="tabpanel" aria-labelledby="profile-tab-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Change Password</h5>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <form method="post">
+
+                                {% csrf_token %}
+                                  <div class="form-group mb-3">
+                                      <label class="form-label" for="old-password">Old Password</label>
+                                      <input type="password" name="old-password" class="form-control" id="old-password" placeholder="Old Password" required>
+                                  </div>
+
+                                  <div class="form-group mb-3">
+                                      <label class="form-label" for="new-password">New Password</label>
+                                      <input type="password" name="new-password" class="form-control" id="new-password" placeholder="New Password" required>
+                                  </div>
+
+                                  <div class="form-group mb-3">
+                                      <label class="form-label" for="confirm-password">Confirm Password</label>
+                                      <input type="password" name="confirm-password" class="form-control" id="confirm-password" placeholder="Confirm Password" required>
+                                  </div>
+
+                                <div class="d-grid mt-4 text-end">
+                                  <button type="submit" name="change-password" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                    </div>
+                    <div class="col-sm-6">
+                      <h5>New password must contain:</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="ti ti-circle-check text-success f-16 me-2"></i> At least 8
+                          characters</li>
+                        <li class="list-group-item"><i class="ti ti-circle-check text-success f-16 me-2"></i> At least 1
+                          lower letter (a-z)</li>
+                        <li class="list-group-item"><i class="ti ti-circle-check text-success f-16 me-2"></i> At least 1
+                          uppercase letter(A-Z)</li>
+                        <li class="list-group-item"><i class="ti ti-circle-check text-success f-16 me-2"></i> At least 1
+                          number (0-9)</li>
+                        <li class="list-group-item"><i class="ti ti-circle-check text-success f-16 me-2"></i> At least 1
+                          special characters</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer text-end btn-page">
+                  <div class="btn btn-outline-secondary">Cancel</div>
+                  <div class="btn btn-primary">Update Profile</div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+
+
+<script>
+        window.onload = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                document.getElementById('location').innerHTML = "Geolocation is not supported by this browser.";
+            }
+        };
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Send a reverse geocoding request to OpenStreetMap Nominatim API
+            fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + latitude + '&lon=' + longitude)
+                .then(response => response.json())
+                .then(data => {
+                    var city = data.address.city;
+                    var country = data.address.country;
+                    document.getElementById('location').innerHTML = city + ", " + country;
+                })
+                .catch(error => {
+                    console.error('Error fetching location:', error);
+                    document.getElementById('location').innerHTML = "Error fetching location.";
+                });
+        }
+    </script>
+
+{% endblock content %}
