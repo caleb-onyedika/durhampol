@@ -1,0 +1,118 @@
+{% extends "partials/admin-base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>
+                <li class="breadcrumb-item" aria-current="page">Home</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">Home</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <div class="col-md-6 col-xxl-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="mb-0">Crime scenes</h6>
+                </div>
+              </div>
+              <div class="bg-body p-3 mt-3 rounded">
+                <div class="mt-3 row align-items-center">
+                  
+                  <div class="col-5 text-center">
+                    <h5 class="mb-1">{{total_crime_scenes}}</h5>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xxl-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="mb-0">Pending Crime Scene Requests</h6>
+                </div>
+              </div>
+              <div class="bg-body p-3 mt-3 rounded">
+                <div class="mt-3 row align-items-center">
+                  
+                  <div class="col-5 text-center">
+                    <h5 class="mb-1">{{pending_crime_scene_requests}}</h5>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xxl-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="mb-0">Pending Users</h6>
+                </div>
+              </div>
+              <div class="bg-body p-3 mt-3 rounded">
+                <div class="mt-3 row align-items-center">
+                  <div class="col-5 text-center">
+                    <h5 class="mb-1">{{pending_users}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xxl-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">                
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="mb-0">Total Users</h6>
+                </div>
+              </div>
+              <div class="bg-body p-3 mt-3 rounded">
+                <div class="mt-3 row align-items-center">
+                  <div class="col-5 text-center">
+                    <h5 class="mb-1">{{total_users}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+
+
+{% endblock content %}
