@@ -177,18 +177,29 @@
                         <table class="table table-hover" id="pc-dt-simple">
                           <thead>
                             <tr>
+                              <th>Time/Date</th>
                               <th>Visitor's Name</th>
+                              <th>Contact Address</th>
                               <th>Reason for visiting</th>
-                              <th>Date/Time</th>
+                              <th>Officer completing log</th>
                             </tr>
                           </thead>
                           <tbody>
         
                             {% for log in crime_scene.incident_logs.all %}
                                 <tr>
+                                  <td>{{log.time}}/{{log.date}}</td>
                                   <td>{{log.visitor.first_name}} {{log.visitor.last_name}}</td>
+                                  {% if log.visitor.is_staff %}
+                                   <td>-</td>
+                                  {% else %}
+                                  <td>{{log.visitor.address}}</td>
+                                  
+                                  {% endif %}
+
                                   <td>{{log.reason_for_visiting}}</td>
-                                  <td>{{log.date}}/{{log.time}}</td>
+
+                                  <td>{{log.visitor.first_name}} {{log.visitor.last_name}}</td>                                
         
                                 </tr>        
         
